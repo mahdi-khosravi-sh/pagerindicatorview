@@ -1,58 +1,46 @@
-package com.mahdikh.viewpagerindicator;
+package com.mahdikh.viewpagerindicator
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import androidx.viewpager2.widget.ViewPager2
+import com.mahdikh.vision.viewpagerindicator.widget.PagerIndicator
+import com.mahdikh.vision.viewpagerindicator.progress.InstanceProgress
+import androidx.recyclerview.widget.RecyclerView
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-import com.mahdikh.vision.viewpagerindicator.progress.InstanceProgress;
-import com.mahdikh.vision.viewpagerindicator.widget.PagerIndicator;
+        val viewPager2 = findViewById<ViewPager2>(R.id.viewPager2)
+        viewPager2.adapter = PagerAdapter()
 
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ViewPager2 viewPager2 = findViewById(R.id.viewPager2);
-        viewPager2.setAdapter(new PagerAdapter());
-
-        PagerIndicator pagerIndicator = findViewById(R.id.pagerIndicator);
-        pagerIndicator.setupWithViewPager2(viewPager2);
-        pagerIndicator.setProgress(new InstanceProgress());
+        val pagerIndicator = findViewById<PagerIndicator>(R.id.pagerIndicator)
+        pagerIndicator.setupWithViewPager2(viewPager2)
+        pagerIndicator.progress = InstanceProgress()
     }
 
-    public static final class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.ViewHolder> {
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false));
+    class PagerAdapter : RecyclerView.Adapter<PagerAdapter.ViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            return ViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
+            )
         }
 
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            holder.textView.setText(String.valueOf(position));
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.textView.text = position.toString()
         }
 
-        @Override
-        public int getItemCount() {
-            return 10;
+        override fun getItemCount(): Int {
+            return 10
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-            TextView textView;
-
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
-                textView = itemView.findViewById(R.id.textView);
-            }
+        class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            var textView: TextView = itemView.findViewById(R.id.textView)
         }
     }
 }
