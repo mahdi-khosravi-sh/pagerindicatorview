@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PagerIndicator">
+        <attr name="indicatorStrokeWidth" format="dimension" />
+        <attr name="indicatorSize" format="dimension" />
+        <attr name="indicatorSpace" format="dimension" />
+        <attr name="color" format="color" />
+        <attr name="selectedColor" format="color" />
+        <attr name="indicatorStyle" format="enum">
+            <enum name="FILL" value="0" />
+            <enum name="STROKE" value="1" />
+            <enum name="FILL_AND_STROKE" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>
