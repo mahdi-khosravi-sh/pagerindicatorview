@@ -6,7 +6,7 @@ import com.mahdikh.vision.viewpagerindicator.util.Paint2
 import com.mahdikh.vision.viewpagerindicator.widget.PagerIndicator
 
 abstract class Indicator {
-    internal lateinit var pagerIndicator: PagerIndicator
+    internal open lateinit var pagerIndicator: PagerIndicator
 
     fun cx(info: IndicatorInfo): Float = info.x + pagerIndicator.indicatorSize / 2F
 
@@ -25,6 +25,12 @@ abstract class Indicator {
     fun bottom(position: Int): Float = bottom(pagerIndicator.getIndicatorInfo(position))
 
     fun size(): Int = pagerIndicator.indicatorSize
+
+    open fun onReady() {
+    }
+
+    open fun onStructureChanged() {
+    }
 
     abstract fun onDraw(canvas: Canvas, position: Int, info: IndicatorInfo, paint: Paint2)
 }

@@ -63,10 +63,12 @@ class PagerIndicator : View {
             field = value
             field.pagerIndicator = this
             progress?.setIndicator(field)
+            indicator.onReady()
         }
 
     init {
         indicator.pagerIndicator = this
+        indicator.onReady()
     }
 
     private val onPageChangeListener: ViewPager.OnPageChangeListener =
@@ -129,7 +131,7 @@ class PagerIndicator : View {
                         indicatorSpace = a.getDimensionPixelSize(index, 10)
                     }
                     R.styleable.PagerIndicator_indicatorSize -> {
-                        indicatorSize = a.getDimensionPixelSize(index, 25)
+                        this.indicatorSize = a.getDimensionPixelSize(index, 25)
                     }
                     R.styleable.PagerIndicator_indicatorStrokeWidth -> {
                         paint.strokeWidth = a.getDimension(index, 0.0F)
@@ -147,9 +149,9 @@ class PagerIndicator : View {
         super.onMeasure(0, 0)
     }
 
-    internal fun getIndicatorInfo(position: Int): IndicatorInfo {
-        return infoList[position]
-    }
+    internal fun getIndicatorInfo(position: Int): IndicatorInfo = infoList[position]
+
+    internal fun getInfoList(): List<IndicatorInfo> = infoList
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -169,10 +171,10 @@ class PagerIndicator : View {
     }
 
     fun computeTopOfIndicator(): Float =
-        paddingTop + getIndicatorStrokeWidth() + getIndicatorProgressSize()
+        paddingTop + getIndicatorStrokeWidth() + getProgressSize()
 
     fun computeLeftOfIndicator(): Float =
-        paddingLeft + indicatorSpace + getIndicatorStrokeWidth() + getIndicatorProgressSize()
+        paddingLeft + indicatorSpace + getIndicatorStrokeWidth() + getProgressSize()
 
     private fun getIndicatorStrokeWidth(): Float {
         if (paint.style != Paint.Style.FILL) {
@@ -181,30 +183,28 @@ class PagerIndicator : View {
         return 0.0F
     }
 
-    private fun getIndicatorProgressSize(): Int {
-        return indicatorSize
+    private fun getProgressSize(): Int {
+        return 0
     }
 
     protected fun remeasuringIndicators() {
         val strokeWidth = getIndicatorStrokeWidth()
         val y: Float = computeTopOfIndicator()
         var x: Float = computeLeftOfIndicator()
-
         for (info in infoList) {
             info.y = y
             info.x = x
             x += indicatorSize + indicatorSpace + strokeWidth
         }
-
-        x += getIndicatorProgressSize() / 2f
+        x += getProgressSize() / 2f
         remeasuringSize(x, y)
+        indicator.onStructureChanged()
         invalidate()
     }
 
     private fun remeasuringSize(x: Float, y: Float) {
         val w = x.toInt() + paddingRight
-        val h =
-            (y + indicatorSize + paddingBottom + getIndicatorStrokeWidth() + getIndicatorProgressSize()).toInt()
+        val h = (y + indicatorSize + paddingBottom + getIndicatorStrokeWidth() + getProgressSize()).toInt()
 
         minimumWidth = w
         minimumHeight = h
@@ -214,15 +214,13 @@ class PagerIndicator : View {
 
     fun getCount(): Int = pager.count
 
-    fun getCurrentItem(): Int {
-        return pager.currentItem
-    }
+    fun getCurrentItem(): Int = pager.currentItem
 
     fun setIndicatorStyle(style: Paint.Style) {
         paint.style = style
     }
 
-    fun setIndicatorStrokeWidth(strokeWidth: Float) {
+    fun setStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
     }
 
@@ -245,22 +243,18 @@ class PagerIndicator : View {
             x += indicatorSize + indicatorSpace + strokeWidth
         }
 
-        x += getIndicatorProgressSize() / 2f
+        x += getProgressSize() / 2f
         remeasuringSize(x, y)
     }
 
     fun setupWithViewPager(viewPager: ViewPager) {
-        if (!this::pager.isInitialized) {
-            pager = Pager(viewPager)
-            setup()
-        }
+        pager = Pager(viewPager)
+        setup()
     }
 
     fun setupWithViewPager2(viewPager2: ViewPager2) {
-        if (!this::pager.isInitialized) {
-            pager = Pager(viewPager2)
-            setup()
-        }
+        pager = Pager(viewPager2)
+        setup()
     }
 
     private fun setup() {
