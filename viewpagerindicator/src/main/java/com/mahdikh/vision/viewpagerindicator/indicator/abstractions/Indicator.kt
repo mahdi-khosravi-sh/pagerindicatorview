@@ -1,4 +1,4 @@
-package com.mahdikh.vision.viewpagerindicator.indicator
+package com.mahdikh.vision.viewpagerindicator.indicator.abstractions
 
 import android.graphics.Canvas
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
@@ -32,5 +32,5 @@ abstract class Indicator {
     open fun onStructureChanged() {
     }
 
-    abstract fun onDraw(canvas: Canvas, position: Int, info: IndicatorInfo, paint: Paint2)
+    abstract fun onDraw(canvas: Canvas, info: IndicatorInfo, paint: Paint2)
 }

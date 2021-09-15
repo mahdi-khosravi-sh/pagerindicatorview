@@ -10,13 +10,13 @@ class ScaleInstanceProgress : IndicatorProgress() {
 
         val toSmallScale = 1.0F - fraction
         canvas.scale(toSmallScale, toSmallScale, cx(currentInfo), cy(currentInfo))
-        indicator.onDraw(canvas, 0, currentInfo, paint)
+        indicator.onDraw(canvas,  currentInfo, paint)
         canvas.restore()
 
         canvas.save()
         val toLargeScale = fraction
         canvas.scale(toLargeScale, toLargeScale, cx(destinationInfo), cy(destinationInfo))
-        indicator.onDraw(canvas, 0, destinationInfo, paint)
+        indicator.onDraw(canvas,  destinationInfo, paint)
         canvas.restore()
     }
 }

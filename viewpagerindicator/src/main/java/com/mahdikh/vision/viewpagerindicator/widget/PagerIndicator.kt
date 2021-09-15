@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mahdikh.vision.viewpagerindicator.R
 import com.mahdikh.vision.viewpagerindicator.indicator.CircleIndicator
-import com.mahdikh.vision.viewpagerindicator.indicator.Indicator
+import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.Indicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.progress.IndicatorProgress
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
@@ -164,7 +164,7 @@ class PagerIndicator : View {
                 } else {
                     paint.color = color
                 }
-                indicator.onDraw(canvas, i, infoList[i], paint)
+                indicator.onDraw(canvas, infoList[i], paint)
             }
             progress?.draw(canvas)
         }
@@ -177,10 +177,10 @@ class PagerIndicator : View {
         paddingLeft + indicatorSpace + getIndicatorStrokeWidth() + getProgressSize()
 
     private fun getIndicatorStrokeWidth(): Float {
-        if (paint.style != Paint.Style.FILL) {
+//        if (paint.style != Paint.Style.FILL) {
             return paint.strokeWidth
-        }
-        return 0.0F
+//        }
+//        return 0.0F
     }
 
     private fun getProgressSize(): Int {
@@ -204,7 +204,8 @@ class PagerIndicator : View {
 
     private fun remeasuringSize(x: Float, y: Float) {
         val w = x.toInt() + paddingRight
-        val h = (y + indicatorSize + paddingBottom + getIndicatorStrokeWidth() + getProgressSize()).toInt()
+        val h =
+            (y + indicatorSize + paddingBottom + getIndicatorStrokeWidth() + getProgressSize()).toInt()
 
         minimumWidth = w
         minimumHeight = h
@@ -222,6 +223,9 @@ class PagerIndicator : View {
 
     fun setStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
+        if (setupWithViewPager) {
+            remeasuringIndicators()
+        }
     }
 
     private fun syncIndicatorProgress() {

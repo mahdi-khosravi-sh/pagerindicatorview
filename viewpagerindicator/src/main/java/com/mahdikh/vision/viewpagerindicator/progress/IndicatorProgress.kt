@@ -3,7 +3,7 @@ package com.mahdikh.vision.viewpagerindicator.progress
 import android.graphics.Canvas
 import android.graphics.Color
 import androidx.viewpager.widget.ViewPager
-import com.mahdikh.vision.viewpagerindicator.indicator.Indicator
+import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.Indicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 import com.mahdikh.vision.viewpagerindicator.widget.PagerIndicator
@@ -22,7 +22,14 @@ abstract class IndicatorProgress {
     var fraction: Float = 0.0F
         get() = if (computeWidth() > 0) field else 1.0F - field
 
+    var offset: Float = 0.0F
+
+    fun setStrokeWidth(strokeWidth: Float) {
+        paint.strokeWidth = strokeWidth
+    }
+
     fun onPageScrolled(position: Int, offset: Float) {
+        this.offset = offset
         val currentPosition = pagerIndicator.getCurrentItem()
         var destinationPosition: Int
 
