@@ -74,12 +74,14 @@ class PagerIndicator : View {
 
     private val onPageChangeListener: ViewPager.OnPageChangeListener =
         object : ViewPager.OnPageChangeListener {
+            private var state: Int = ViewPager.SCROLL_STATE_IDLE
+
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
-                progress?.onPageScrolled(position, positionOffset)
+                progress?.onPageScrolled(position, positionOffset, state)
             }
 
             override fun onPageSelected(position: Int) {
@@ -87,6 +89,7 @@ class PagerIndicator : View {
             }
 
             override fun onPageScrollStateChanged(state: Int) {
+                this.state = state
                 progress?.onPageScrollStateChanged(state)
             }
         }
@@ -226,7 +229,7 @@ class PagerIndicator : View {
     private fun syncIndicatorProgress() {
         progress?.let {
             if (it.keepDraw) {
-                it.virtualScroll()
+                it.onPageScrolled(getCurrentItem(), 1.0f, ViewPager.SCROLL_STATE_DRAGGING)
             }
         }
     }

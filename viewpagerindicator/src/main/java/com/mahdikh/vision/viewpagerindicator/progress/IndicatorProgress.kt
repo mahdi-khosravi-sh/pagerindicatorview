@@ -1,5 +1,6 @@
 package com.mahdikh.vision.viewpagerindicator.progress
 
+import android.animation.TimeInterpolator
 import android.graphics.Canvas
 import android.graphics.Color
 import androidx.viewpager.widget.ViewPager
@@ -17,20 +18,18 @@ abstract class IndicatorProgress {
     protected lateinit var currentInfo: IndicatorInfo
     protected lateinit var destinationInfo: IndicatorInfo
     private var oldDestinationPosition = 0
+    var interpolator: TimeInterpolator? = null
+    var keepDraw = false
     var inProgress: Boolean = false
         private set
-    var keepDraw = false
-    var fraction: Float = 0.0F
-        get() = if (computeWidth() > 0) field else 1.0F - field
-
     var offset: Float = 0.0F
+        private set
 
     fun setStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
     }
 
-    fun onPageScrolled(position: Int, offset: Float) {
-        this.offset = offset
+    fun onPageScrolled(position: Int, offset: Float, state: Int) {
         val currentPosition = pagerIndicator.getCurrentItem()
         var destinationPosition: Int
 
@@ -46,33 +45,19 @@ abstract class IndicatorProgress {
 
         if (destinationPosition <= 0) destinationPosition = 0
 
-        if (destinationPosition != oldDestinationPosition) {
+        if (destinationPosition != oldDestinationPosition && state != ViewPager.SCROLL_STATE_SETTLING) {
             currentInfo = pagerIndicator.getIndicatorInfo(currentPosition)
             destinationInfo = pagerIndicator.getIndicatorInfo(destinationPosition)
         }
-
-        fraction = offset
+        this.offset = offset
         oldDestinationPosition = destinationPosition
         pagerIndicator.invalidate()
     }
 
     fun onPageScrollStateChanged(state: Int) {
-        inProgress = (state == ViewPager.SCROLL_STATE_DRAGGING
-                || state == ViewPager.SCROLL_STATE_SETTLING)
+        inProgress = state != ViewPager.SCROLL_STATE_IDLE
         pagerIndicator.invalidate()
     }
-
-    fun computeWidth(): Float {
-        return cx(destinationInfo) - cx(currentInfo)
-    }
-
-    open fun virtualScroll() {
-        onPageScrolled(pagerIndicator.getCurrentItem(), 1.0f)
-    }
-
-    protected fun cx(info: IndicatorInfo): Float = indicator.cx(info)
-
-    protected fun cy(info: IndicatorInfo): Float = indicator.cy(info)
 
     internal fun setIndicator(indicator: Indicator) {
         this.indicator = indicator
@@ -87,11 +72,29 @@ abstract class IndicatorProgress {
         destinationInfo = currentInfo
     }
 
-    abstract fun onDraw(canvas: Canvas, paint: Paint2)
-
     open fun draw(canvas: Canvas) {
         if (inProgress || keepDraw) {
             onDraw(canvas, paint)
         }
     }
+
+    abstract fun onDraw(canvas: Canvas, paint: Paint2)
+
+    protected fun cx(info: IndicatorInfo): Float = indicator.cx(info)
+
+    protected fun cy(info: IndicatorInfo): Float = indicator.cy(info)
+
+    fun computeWidth(): Float = cx(destinationInfo) - cx(currentInfo)
+
+    open fun getInterpolation(input: Float): Float {
+        return interpolator?.getInterpolation(input) ?: input
+    }
+
+    open fun fractionInterpolation(): Float = getInterpolation(fraction())
+
+    open fun fraction(): Float {
+        return if (computeWidth() > 0) offset else 1.0F - offset
+    }
+
+    open fun offsetInterpolation(): Float = getInterpolation(offset)
 }
