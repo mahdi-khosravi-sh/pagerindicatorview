@@ -12,13 +12,14 @@ abstract class IndicatorProgress {
     private val paint: Paint2 = Paint2().also {
         it.color = Color.parseColor("#FF5555")
     }
-    protected lateinit var pagerIndicator: PagerIndicator
+    protected open lateinit var pagerIndicator: PagerIndicator
     protected lateinit var indicator: Indicator
     protected lateinit var currentInfo: IndicatorInfo
     protected lateinit var destinationInfo: IndicatorInfo
     private var oldDestinationPosition = 0
     var inProgress: Boolean = false
-    val keepDraw = false
+        private set
+    var keepDraw = false
     var fraction: Float = 0.0F
         get() = if (computeWidth() > 0) field else 1.0F - field
 
@@ -56,10 +57,6 @@ abstract class IndicatorProgress {
     }
 
     fun onPageScrollStateChanged(state: Int) {
-        if (!this::destinationInfo.isInitialized) {
-            currentInfo = pagerIndicator.getIndicatorInfo(pagerIndicator.getCurrentItem())
-            destinationInfo = currentInfo
-        }
         inProgress = (state == ViewPager.SCROLL_STATE_DRAGGING
                 || state == ViewPager.SCROLL_STATE_SETTLING)
         pagerIndicator.invalidate()
@@ -83,6 +80,11 @@ abstract class IndicatorProgress {
 
     internal fun setPagerIndicator(pagerIndicator: PagerIndicator) {
         this.pagerIndicator = pagerIndicator
+    }
+
+    open fun onReady() {
+        currentInfo = pagerIndicator.getIndicatorInfo(pagerIndicator.getCurrentItem())
+        destinationInfo = currentInfo
     }
 
     abstract fun onDraw(canvas: Canvas, paint: Paint2)

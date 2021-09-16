@@ -28,6 +28,7 @@ class PagerIndicator : View {
             field?.let {
                 it.setPagerIndicator(this)
                 it.setIndicator(indicator)
+                it.onReady()
             }
         }
     var indicatorSize: Int = 25
@@ -151,8 +152,6 @@ class PagerIndicator : View {
 
     internal fun getIndicatorInfo(position: Int): IndicatorInfo = infoList[position]
 
-    internal fun getInfoList(): List<IndicatorInfo> = infoList
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (setupWithViewPager) {
@@ -170,17 +169,13 @@ class PagerIndicator : View {
         }
     }
 
-    fun computeTopOfIndicator(): Float =
-        paddingTop + getIndicatorStrokeWidth() + getProgressSize()
+    fun computeTopOfIndicator(): Float = paddingTop + getIndicatorStrokeWidth() + getProgressSize()
 
-    fun computeLeftOfIndicator(): Float =
-        paddingLeft + indicatorSpace + getIndicatorStrokeWidth() + getProgressSize()
+    fun computeLeftOfIndicator(): Float = paddingLeft + indicatorSpace +
+            getIndicatorStrokeWidth() + getProgressSize()
 
     private fun getIndicatorStrokeWidth(): Float {
-//        if (paint.style != Paint.Style.FILL) {
-            return paint.strokeWidth
-//        }
-//        return 0.0F
+        return paint.strokeWidth
     }
 
     private fun getProgressSize(): Int {
