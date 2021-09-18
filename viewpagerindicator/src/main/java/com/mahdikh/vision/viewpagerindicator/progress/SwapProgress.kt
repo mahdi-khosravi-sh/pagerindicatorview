@@ -19,16 +19,17 @@ class SwapProgress : MultiIndicatorProgress() {
                 -distance * (1 - fraction)
             }
         ) * jumpFactor
+
+        if (currentInfo != destinationInfo) {
+            canvas.save()
+            canvas.translate(-distance * fraction, y)
+            indicator.onDraw(canvas, destinationInfo)
+            canvas.restore()
+        }
+
         canvas.save()
         canvas.translate(distance * fraction, -y)
         indicator.onDraw(canvas, currentInfo, paint)
-        canvas.restore()
-
-        if (currentInfo == destinationInfo) return
-
-        canvas.save()
-        canvas.translate(-distance * fraction, y)
-        indicator.onDraw(canvas, destinationInfo)
         canvas.restore()
     }
 
