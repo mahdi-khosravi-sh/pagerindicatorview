@@ -25,7 +25,7 @@ class PlusSignIndicator : TransformIndicator() {
     }
 
     override fun onDrawing(canvas: Canvas, info: IndicatorInfo, paint: Paint2) {
-        canvas.drawLine(baseInfo.x, cx, right(baseInfo), cy, paint)
+        canvas.drawLine(baseInfo.x, cy, right(baseInfo), cy, paint)
         canvas.drawLine(cx, baseInfo.y, cx, bottom(baseInfo), paint)
     }
 }
