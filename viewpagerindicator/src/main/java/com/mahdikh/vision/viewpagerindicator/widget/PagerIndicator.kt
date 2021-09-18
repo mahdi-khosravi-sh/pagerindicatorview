@@ -159,6 +159,9 @@ class PagerIndicator : View {
     internal fun getInfoList(): MutableList<IndicatorInfo> = infoList
 
     override fun onDraw(canvas: Canvas) {
+        if (layoutDirection == LAYOUT_DIRECTION_RTL) {
+            canvas.scale(-1.0F, 1.0F, width / 2F, height / 2F)
+        }
         super.onDraw(canvas)
         if (setupWithViewPager) {
             progress?.onPreDraw(canvas)
