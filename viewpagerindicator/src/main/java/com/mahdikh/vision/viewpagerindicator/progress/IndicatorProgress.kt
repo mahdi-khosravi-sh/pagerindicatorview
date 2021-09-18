@@ -3,6 +3,7 @@ package com.mahdikh.vision.viewpagerindicator.progress
 import android.animation.TimeInterpolator
 import android.graphics.Canvas
 import android.graphics.Color
+import androidx.annotation.CallSuper
 import androidx.viewpager.widget.ViewPager
 import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.Indicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
@@ -11,7 +12,7 @@ import com.mahdikh.vision.viewpagerindicator.widget.PagerIndicator
 
 abstract class IndicatorProgress {
     private val paint: Paint2 = Paint2().also {
-        it.color = Color.parseColor("#FF5555")
+        it.color = Color.parseColor("#ff5555")
     }
     protected open lateinit var pagerIndicator: PagerIndicator
     protected lateinit var indicator: Indicator
@@ -19,17 +20,22 @@ abstract class IndicatorProgress {
     protected lateinit var destinationInfo: IndicatorInfo
     private var oldDestinationPosition = 0
     var interpolator: TimeInterpolator? = null
-    var keepDraw = false
+    open var keepDraw = false
     var inProgress: Boolean = false
-        private set
+        protected set
     var offset: Float = 0.0F
         private set
 
-    fun setStrokeWidth(strokeWidth: Float) {
+    open fun setStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
     }
 
-    fun onPageScrolled(position: Int, offset: Float, state: Int) {
+    open fun getColor(): Int {
+        return paint.color
+    }
+
+    @CallSuper
+    open fun onPageScrolled(position: Int, offset: Float, state: Int) {
         val currentPosition = pagerIndicator.getCurrentItem()
         var destinationPosition: Int
 
@@ -40,22 +46,33 @@ abstract class IndicatorProgress {
                 currentPosition + 1
             }
         } else {
+
             currentPosition - 1
         }
 
         if (destinationPosition <= 0) destinationPosition = 0
 
         if (destinationPosition != oldDestinationPosition && state != ViewPager.SCROLL_STATE_SETTLING) {
+            val oldCurrent = currentInfo
+            val oldDestination = destinationInfo
+
             currentInfo = pagerIndicator.getIndicatorInfo(currentPosition)
             destinationInfo = pagerIndicator.getIndicatorInfo(destinationPosition)
+
+            onIndicatorInfoChanged(oldCurrent, oldDestination)
         }
         this.offset = offset
         oldDestinationPosition = destinationPosition
         pagerIndicator.invalidate()
     }
 
-    fun onPageScrollStateChanged(state: Int) {
+    @CallSuper
+    open fun onPageScrollStateChanged(state: Int) {
         inProgress = state != ViewPager.SCROLL_STATE_IDLE
+//        if (state == ViewPager.SCROLL_STATE_IDLE) {
+//            currentInfo = pagerIndicator.getIndicatorInfo(pagerIndicator.getCurrentItem())
+//            destinationInfo = currentInfo
+//        }
         pagerIndicator.invalidate()
     }
 
@@ -67,6 +84,7 @@ abstract class IndicatorProgress {
         this.pagerIndicator = pagerIndicator
     }
 
+    @CallSuper
     open fun onReady() {
         currentInfo = pagerIndicator.getIndicatorInfo(pagerIndicator.getCurrentItem())
         destinationInfo = currentInfo
@@ -78,13 +96,25 @@ abstract class IndicatorProgress {
         }
     }
 
+    open fun onIndicatorInfoChanged(
+        oldCurrent: IndicatorInfo,
+        oldDestination: IndicatorInfo
+    ) {
+        // Do Nothing
+    }
+
+
+    open fun onPreDraw(canvas: Canvas) {
+        // Do Nothing
+    }
+
     abstract fun onDraw(canvas: Canvas, paint: Paint2)
 
     protected fun cx(info: IndicatorInfo): Float = indicator.cx(info)
 
     protected fun cy(info: IndicatorInfo): Float = indicator.cy(info)
 
-    fun computeWidth(): Float = cx(destinationInfo) - cx(currentInfo)
+    fun computeDistance(): Float = cx(destinationInfo) - cx(currentInfo)
 
     open fun getInterpolation(input: Float): Float {
         return interpolator?.getInterpolation(input) ?: input
@@ -93,7 +123,7 @@ abstract class IndicatorProgress {
     open fun fractionInterpolation(): Float = getInterpolation(fraction())
 
     open fun fraction(): Float {
-        return if (computeWidth() > 0) offset else 1.0F - offset
+        return if (computeDistance() > 0) offset else 1.0F - offset
     }
 
     open fun offsetInterpolation(): Float = getInterpolation(offset)

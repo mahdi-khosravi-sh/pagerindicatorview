@@ -14,11 +14,9 @@ import com.mahdikh.vision.viewpagerindicator.indicator.CircleIndicator
 import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.Indicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.progress.IndicatorProgress
-import com.mahdikh.vision.viewpagerindicator.util.Paint2
 
 class PagerIndicator : View {
     private val infoList: MutableList<IndicatorInfo> = mutableListOf()
-    private val paint: Paint2 = Paint2()
     private lateinit var pager: Pager
     var setupWithViewPager = false
         private set
@@ -138,10 +136,10 @@ class PagerIndicator : View {
                         this.indicatorSize = a.getDimensionPixelSize(index, 25)
                     }
                     R.styleable.PagerIndicator_indicatorStrokeWidth -> {
-                        paint.strokeWidth = a.getDimension(index, 0.0F)
+                        indicator.setStrokeWidth(a.getDimension(index, 0.0F))
                     }
                     R.styleable.PagerIndicator_indicatorStyle -> {
-                        paint.setStyle(a.getInt(index, 0))
+                        indicator.setStyle(a.getInt(index, 0))
                     }
                 }
             }
@@ -155,21 +153,33 @@ class PagerIndicator : View {
 
     internal fun getIndicatorInfo(position: Int): IndicatorInfo = infoList[position]
 
+    internal fun getInfoList(): MutableList<IndicatorInfo> = infoList
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (setupWithViewPager) {
+            progress?.onPreDraw(canvas)
             val size = infoList.size
             val current = getCurrentItem()
             for (i in 0 until size) {
                 if (i == current && progress?.let { !it.inProgress } != false) {
-                    paint.color = selectedColor
+                    indicator.setColor(selectedColor)
                 } else {
-                    paint.color = color
+                    indicator.setColor(color)
                 }
-                indicator.onDraw(canvas, infoList[i], paint)
+                if (infoList[i].draw) {
+                    indicator.onDraw(canvas, infoList[i])
+                }
             }
             progress?.draw(canvas)
         }
+    }
+
+    fun getColor(position: Int): Int {
+        if (getCurrentItem() == position) {
+            return selectedColor
+        }
+        return color
     }
 
     fun computeTopOfIndicator(): Float = paddingTop + getIndicatorStrokeWidth() + getProgressSize()
@@ -178,7 +188,7 @@ class PagerIndicator : View {
             getIndicatorStrokeWidth() + getProgressSize()
 
     private fun getIndicatorStrokeWidth(): Float {
-        return paint.strokeWidth
+        return indicator.getStrokeWidth()
     }
 
     private fun getProgressSize(): Int {
@@ -216,11 +226,11 @@ class PagerIndicator : View {
     fun getCurrentItem(): Int = pager.currentItem
 
     fun setIndicatorStyle(style: Paint.Style) {
-        paint.style = style
+        indicator.setStyle(style)
     }
 
     fun setStrokeWidth(strokeWidth: Float) {
-        paint.strokeWidth = strokeWidth
+        indicator.setStrokeWidth(strokeWidth)
         if (setupWithViewPager) {
             remeasuringIndicators()
         }
