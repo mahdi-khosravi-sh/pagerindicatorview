@@ -26,7 +26,9 @@ class PagerIndicator : View {
             field?.let {
                 it.setPagerIndicator(this)
                 it.setIndicator(indicator)
-                it.onReady()
+                if (setupWithViewPager) {
+                    it.onReady()
+                }
             }
         }
     var indicatorSize: Int = 25
@@ -62,12 +64,13 @@ class PagerIndicator : View {
             field = value
             field.pagerIndicator = this
             progress?.setIndicator(field)
-            indicator.onReady()
+            if (setupWithViewPager) {
+                indicator.onReady()
+            }
         }
 
     init {
         indicator.pagerIndicator = this
-        indicator.onReady()
     }
 
     private val onPageChangeListener: ViewPager.OnPageChangeListener =
@@ -218,7 +221,9 @@ class PagerIndicator : View {
         minimumWidth = w
         minimumHeight = h
 
-        syncIndicatorProgress()
+        if (setupWithViewPager) {
+            syncIndicatorProgress()
+        }
     }
 
     fun getCount(): Int = pager.count
@@ -239,7 +244,10 @@ class PagerIndicator : View {
     private fun syncIndicatorProgress() {
         progress?.let {
             if (it.keepDraw) {
-                it.onPageScrolled(getCurrentItem(), 1.0f, ViewPager.SCROLL_STATE_DRAGGING)
+                it.onPageScrolled(
+                    getCurrentItem(), 1.0f,
+                    ViewPager.SCROLL_STATE_DRAGGING
+                )
             }
         }
     }
@@ -272,6 +280,8 @@ class PagerIndicator : View {
     private fun setup() {
         pager.addOnPageChangeListener(onPageChangeListener)
         setupIndicatorsInfo()
+        indicator.onReady()
+        progress?.onReady()
         setupWithViewPager = true
     }
 }
