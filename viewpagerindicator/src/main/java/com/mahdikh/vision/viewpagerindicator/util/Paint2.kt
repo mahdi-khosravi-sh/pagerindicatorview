@@ -1,8 +1,6 @@
 package com.mahdikh.vision.viewpagerindicator.util
 
 import android.graphics.Paint
-import android.graphics.Paint.Cap
-import android.graphics.Paint.Join
 
 class Paint2 : Paint(ANTI_ALIAS_FLAG) {
     companion object {
