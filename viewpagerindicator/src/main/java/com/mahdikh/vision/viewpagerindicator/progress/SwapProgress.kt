@@ -6,7 +6,7 @@ import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 import kotlin.math.abs
 
-class SwapProgress : MultiIndicatorProgress() {
+class SwapProgress : IndicatorProgress() {
     var jumpFactor: Float = 1.0F
 
     override fun onDraw(canvas: Canvas, paint: Paint2) {
@@ -38,9 +38,9 @@ class SwapProgress : MultiIndicatorProgress() {
         setIndicatorInfoDraw(false)
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
+    override fun onScrollStateChanged(state: Int) {
         destinationInfo.draw = true
-        super.onPageScrollStateChanged(state)
+        super.onScrollStateChanged(state)
         if (state == ViewPager.SCROLL_STATE_IDLE) {
             setIndicatorInfoDraw(true)
             if (keepDraw) {

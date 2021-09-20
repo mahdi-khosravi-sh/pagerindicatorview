@@ -18,7 +18,6 @@ class ScaleProgress : IndicatorProgress() {
     override fun onReady() {
         super.onReady()
         paintColor = getColor()
-        pagerIndicator.getInfoList()[pagerIndicator.getCurrentItem()].draw = false
     }
 
     override fun onPreDraw(canvas: Canvas) {
@@ -74,8 +73,7 @@ class ScaleProgress : IndicatorProgress() {
         }
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
-        super.onPageScrollStateChanged(state)
+    override fun onScrollStateChanged(state: Int) {
         if (state == ViewPager.SCROLL_STATE_IDLE) {
             currentInfo = pagerIndicator.getIndicatorInfo(pagerIndicator.getCurrentItem())
             destinationInfo = currentInfo

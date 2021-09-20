@@ -8,14 +8,13 @@ import androidx.viewpager.widget.ViewPager
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 
-class WormProgress : MultiIndicatorProgress() {
+class WormProgress : IndicatorProgress() {
     private lateinit var oldCurrent: IndicatorInfo
     private lateinit var oldDestination: IndicatorInfo
     private var animator: ValueAnimator? = null
     private var fromAnimator = false
     private var currentPage: Int = 0
     private var animatedX: Float = 0.0F
-
     var duration: Long = 200
 
     override fun onReady() {
@@ -46,8 +45,8 @@ class WormProgress : MultiIndicatorProgress() {
         this.oldDestination = oldDestination
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
-        super.onPageScrollStateChanged(state)
+    override fun onScrollStateChanged(state: Int) {
+        super.onScrollStateChanged(state)
         animator?.let {
             it.end()
             fromAnimator = false

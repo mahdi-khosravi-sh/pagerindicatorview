@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 import kotlin.math.abs
 
-class DropProgress : MultiIndicatorProgress() {
+class DropProgress : IndicatorProgress() {
     var jumpFactor: Float = 1.0F
 
     override fun onDraw(canvas: Canvas, paint: Paint2) {
@@ -25,7 +25,6 @@ class DropProgress : MultiIndicatorProgress() {
             } else {
                 1 * fraction
             }
-
 
         canvas.save()
         canvas.scale(scale, scale, cx(currentInfo) + distance / 2F, cy(destinationInfo))

@@ -66,14 +66,22 @@ abstract class IndicatorProgress {
         pagerIndicator.invalidate()
     }
 
-    @CallSuper
-    open fun onPageScrollStateChanged(state: Int) {
+    fun onPageScrollStateChanged(state: Int) {
         inProgress = state != ViewPager.SCROLL_STATE_IDLE
-//        if (state == ViewPager.SCROLL_STATE_IDLE) {
-//            currentInfo = pagerIndicator.getIndicatorInfo(pagerIndicator.getCurrentItem())
-//            destinationInfo = currentInfo
-//        }
         pagerIndicator.invalidate()
+        onScrollStateChanged(state)
+    }
+
+    open fun onScrollStateChanged(state: Int) {
+        currentInfo.draw = true
+        if (state == ViewPager.SCROLL_STATE_IDLE) {
+            currentInfo = pagerIndicator.getIndicatorInfo(pagerIndicator.getCurrentItem())
+            destinationInfo = currentInfo
+
+            if (keepDraw) {
+                currentInfo.draw = false
+            }
+        }
     }
 
     internal fun setIndicator(indicator: Indicator) {
@@ -88,6 +96,10 @@ abstract class IndicatorProgress {
     open fun onReady() {
         currentInfo = pagerIndicator.getIndicatorInfo(pagerIndicator.getCurrentItem())
         destinationInfo = currentInfo
+
+        if (keepDraw){
+            pagerIndicator.getInfoList()[pagerIndicator.getCurrentItem()].draw = false
+        }
     }
 
     open fun draw(canvas: Canvas) {
@@ -100,7 +112,8 @@ abstract class IndicatorProgress {
         oldCurrent: IndicatorInfo,
         oldDestination: IndicatorInfo
     ) {
-        // Do Nothing
+        oldCurrent.draw = true
+        oldDestination.draw = true
     }
 
 

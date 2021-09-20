@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.RectF
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 
-class ArcProgress : MultiIndicatorProgress() {
+class ArcProgress : IndicatorProgress() {
     private val rectF = RectF()
     var startAngle = -90.0F
 
