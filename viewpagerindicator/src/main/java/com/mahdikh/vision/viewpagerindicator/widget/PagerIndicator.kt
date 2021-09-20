@@ -229,9 +229,9 @@ class PagerIndicator : View {
         }
     }
 
-    fun getCount(): Int = pager.count
+    fun getCount(): Int = pager.getCount()
 
-    fun getCurrentItem(): Int = pager.currentItem
+    fun getCurrentItem(): Int = pager.getCurrentItem()
 
     fun setIndicatorStyle(style: Paint.Style) {
         indicator.setStyle(style)
