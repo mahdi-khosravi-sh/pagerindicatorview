@@ -1,7 +1,6 @@
 package com.mahdikh.vision.viewpagerindicator.indicator
 
 import android.graphics.Canvas
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.PathIndicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 import kotlin.math.PI

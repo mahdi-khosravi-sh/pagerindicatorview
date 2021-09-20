@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.TransformIndicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 

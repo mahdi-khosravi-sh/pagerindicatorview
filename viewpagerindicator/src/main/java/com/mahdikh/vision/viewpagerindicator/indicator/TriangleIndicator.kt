@@ -1,6 +1,5 @@
 package com.mahdikh.vision.viewpagerindicator.indicator
 
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.PathIndicator
 import kotlin.math.sqrt
 
 class TriangleIndicator : PathIndicator() {

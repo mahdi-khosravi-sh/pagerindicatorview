@@ -1,7 +1,6 @@
 package com.mahdikh.vision.viewpagerindicator.indicator
 
 import android.graphics.RectF
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.PathIndicator
 
 class MoonIndicator : PathIndicator() {
     override var rotation: Float = -40.0F

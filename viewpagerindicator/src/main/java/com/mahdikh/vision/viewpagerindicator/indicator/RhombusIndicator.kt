@@ -1,7 +1,5 @@
 package com.mahdikh.vision.viewpagerindicator.indicator
 
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.PathIndicator
-
 class RhombusIndicator : PathIndicator() {
    override fun adjustPath() {
        super.adjustPath()

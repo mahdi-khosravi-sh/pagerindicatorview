@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import androidx.annotation.CallSuper
 import androidx.viewpager.widget.ViewPager
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.Indicator
+import com.mahdikh.vision.viewpagerindicator.indicator.Indicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 import com.mahdikh.vision.viewpagerindicator.widget.PagerIndicator

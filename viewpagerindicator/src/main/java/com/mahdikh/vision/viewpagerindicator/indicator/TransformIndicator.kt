@@ -1,4 +1,4 @@
-package com.mahdikh.vision.viewpagerindicator.indicator.abstractions
+package com.mahdikh.vision.viewpagerindicator.indicator
 
 import android.graphics.Canvas
 import androidx.annotation.CallSuper

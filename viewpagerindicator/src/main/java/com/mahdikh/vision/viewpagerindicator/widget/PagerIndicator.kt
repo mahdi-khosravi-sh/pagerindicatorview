@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mahdikh.vision.viewpagerindicator.R
 import com.mahdikh.vision.viewpagerindicator.indicator.CircleIndicator
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.Indicator
+import com.mahdikh.vision.viewpagerindicator.indicator.Indicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.progress.IndicatorProgress
 

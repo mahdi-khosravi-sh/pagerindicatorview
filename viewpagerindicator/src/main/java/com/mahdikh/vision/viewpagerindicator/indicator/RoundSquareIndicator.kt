@@ -1,7 +1,6 @@
 package com.mahdikh.vision.viewpagerindicator.indicator
 
 import android.graphics.Canvas
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.Indicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 

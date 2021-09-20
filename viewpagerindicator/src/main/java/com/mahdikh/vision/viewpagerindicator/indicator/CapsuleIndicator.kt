@@ -1,7 +1,5 @@
 package com.mahdikh.vision.viewpagerindicator.indicator
 
-import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.PathIndicator
-
 open class CapsuleIndicator : PathIndicator() {
     override fun adjustPath() {
         path.reset()
