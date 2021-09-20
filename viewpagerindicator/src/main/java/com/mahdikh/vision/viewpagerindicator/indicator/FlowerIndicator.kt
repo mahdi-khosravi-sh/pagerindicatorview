@@ -1,14 +1,13 @@
 package com.mahdikh.vision.viewpagerindicator.indicator
 
 import android.graphics.Canvas
-import com.mahdikh.vision.viewpagerindicator.LoopDraw
 import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.PathIndicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 import kotlin.math.PI
 
-open class FlowerIndicator : PathIndicator(), LoopDraw {
-    override var loopCount: Int = 3
+open class FlowerIndicator : PathIndicator() {
+    var petalsCount: Int = 3
     var factor: Float = 0.8F
     var circleRadiusFactor: Float = 1.2F
 
@@ -17,7 +16,7 @@ open class FlowerIndicator : PathIndicator(), LoopDraw {
 
     override fun adjustPath() {
         super.adjustPath()
-        val leafWidth: Float = perimeter() / loopCount
+        val leafWidth: Float = perimeter() / petalsCount
 
         cy = cy(baseInfo)
         cx = cy(baseInfo)
@@ -47,9 +46,13 @@ open class FlowerIndicator : PathIndicator(), LoopDraw {
 
     override fun onDrawing(canvas: Canvas, info: IndicatorInfo, paint: Paint2) {
         canvas.drawCircle(cx, cy, radius() * circleRadiusFactor, paint)
-
-        loopDraw(canvas, cx, cy) {
+        val count = petalsCount
+        val degrees = 360.0F / count
+        for (i in 1..count) {
+            canvas.save()
+            canvas.rotate(i * degrees, cx, cy)
             canvas.drawPath(path, paint)
+            canvas.restore()
         }
     }
 

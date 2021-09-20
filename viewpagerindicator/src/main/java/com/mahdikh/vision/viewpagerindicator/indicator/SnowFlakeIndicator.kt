@@ -1,13 +1,12 @@
 package com.mahdikh.vision.viewpagerindicator.indicator
 
 import android.graphics.Canvas
-import com.mahdikh.vision.viewpagerindicator.LoopDraw
 import com.mahdikh.vision.viewpagerindicator.indicator.abstractions.TransformIndicator
 import com.mahdikh.vision.viewpagerindicator.info.IndicatorInfo
 import com.mahdikh.vision.viewpagerindicator.util.Paint2
 
-class SnowFlakeIndicator : TransformIndicator(), LoopDraw {
-    override var loopCount: Int = 5
+class SnowFlakeIndicator : TransformIndicator() {
+    var branchCounts: Int = 5
     var factor: Float = 0.5F
 
     private var cx: Float = 0.0F
@@ -35,9 +34,14 @@ class SnowFlakeIndicator : TransformIndicator(), LoopDraw {
     }
 
     override fun onDrawing(canvas: Canvas, info: IndicatorInfo, paint: Paint2) {
-        loopDraw(canvas, cx, cy) {
+        val count = branchCounts
+        val degrees = 360.0F / count
+        for (i in 1..count) {
+            canvas.save()
+            canvas.rotate(i * degrees, cx, cy)
             canvas.drawLine(cx, cy, cx, diameter, paint)
             canvas.drawCircle(cx, topPoint, radius, paint)
+            canvas.restore()
         }
     }
 
