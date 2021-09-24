@@ -1,2 +1,2 @@
 # viewpager-indicator
-Android ViewPagerIndicator Widget
+Android PagerIndicatorView Widget

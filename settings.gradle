@@ -5,6 +5,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "ViewPagerIndicator"
+rootProject.name = "PagerIndicatorView"
 include ':app'
-include ':viewpagerindicator'
+include ':pagerindicatorview'
