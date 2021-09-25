@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.mahdikh.vision.pagerindicatorview.R
@@ -120,6 +121,19 @@ class PagerIndicatorView : View {
                 0
             )
 
+            if (a.hasValue(R.styleable.PagerIndicatorView_indicator)) {
+                val className = a.getString(R.styleable.PagerIndicatorView_indicator)
+                val instance = newInstance<Indicator>(className)
+                if (instance != null) {
+                    indicator = instance
+                }
+            }
+
+            if (a.hasValue(R.styleable.PagerIndicatorView_progress)) {
+                val className = a.getString(R.styleable.PagerIndicatorView_progress)
+                progress = newInstance(className)
+            }
+
             val size = a.indexCount
             var index: Int
 
@@ -143,6 +157,12 @@ class PagerIndicatorView : View {
                     }
                     R.styleable.PagerIndicatorView_indicatorStyle -> {
                         indicator.setStyle(a.getInt(index, 0))
+                    }
+                    R.styleable.PagerIndicatorView_progress_interpolator -> {
+                        progress?.interpolator = AnimationUtils.loadInterpolator(
+                            context.applicationContext,
+                            a.getResourceId(index, -1)
+                        )
                     }
                 }
             }
@@ -286,5 +306,20 @@ class PagerIndicatorView : View {
         indicator.onReady()
         progress?.onReady()
         setupWithViewPager = true
+    }
+
+    companion object {
+        private inline fun <reified T> newInstance(className: String?): T? {
+            if (className != null) {
+                return try {
+                    val clazz = Class.forName(className)
+                    clazz.getDeclaredConstructor().newInstance() as T
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+            }
+            return null
+        }
     }
 }

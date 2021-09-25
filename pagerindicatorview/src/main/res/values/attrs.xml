@@ -11,5 +11,9 @@
             <enum name="STROKE" value="1" />
             <enum name="FILL_AND_STROKE" value="2" />
         </attr>
+
+        <attr name="indicator" format="string" />
+        <attr name="progress" format="string" />
+        <attr name="progress_interpolator" format="reference" />
     </declare-styleable>
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="CircleIndicator">com.mahdikh.vision.pagerindicatorview.indicator.CircleIndicator</string>
+    <string name="CapsuleIndicator">com.mahdikh.vision.pagerindicatorview.indicator.CapsuleIndicator</string>
+    <string name="DrawableIndicator">com.mahdikh.vision.pagerindicatorview.indicator.DrawableIndicator</string>
+    <string name="FlowerIndicator">com.mahdikh.vision.pagerindicatorview.indicator.FlowerIndicator</string>
+    <string name="LineIndicator">com.mahdikh.vision.pagerindicatorview.indicator.LineIndicator</string>
+    <string name="MoonIndicator">com.mahdikh.vision.pagerindicatorview.indicator.MoonIndicator</string>
+    <string name="PlusSignIndicator">com.mahdikh.vision.pagerindicatorview.indicator.PlusSignIndicator</string>
+    <string name="RhombusIndicator">com.mahdikh.vision.pagerindicatorview.indicator.RhombusIndicator</string>
+    <string name="RoundSquareIndicator">com.mahdikh.vision.pagerindicatorview.indicator.RoundSquareIndicator</string>
+    <string name="SnowFlakeIndicator">com.mahdikh.vision.pagerindicatorview.indicator.SnowFlakeIndicator</string>
+    <string name="SquareIndicator">com.mahdikh.vision.pagerindicatorview.indicator.SquareIndicator</string>
+    <string name="SunIndicator">com.mahdikh.vision.pagerindicatorview.indicator.SunIndicator</string>
+    <string name="TriangleIndicator">com.mahdikh.vision.pagerindicatorview.indicator.TriangleIndicator</string>
+    
+
+    <string name="ArcProgress">com.mahdikh.vision.pagerindicatorview.progress.ArcProgress</string>
+    <string name="DropProgress">com.mahdikh.vision.pagerindicatorview.progress.DropProgress</string>
+    <string name="InstanceProgress">com.mahdikh.vision.pagerindicatorview.progress.InstanceProgress</string>
+    <string name="ScaleInstanceProgress">com.mahdikh.vision.pagerindicatorview.progress.ScaleInstanceProgress</string>
+    <string name="ScaleProgress">com.mahdikh.vision.pagerindicatorview.progress.ScaleProgress</string>
+    <string name="SwapProgress">com.mahdikh.vision.pagerindicatorview.progress.SwapProgress</string>
+    <string name="WormProgress">com.mahdikh.vision.pagerindicatorview.progress.WormProgress</string>
+</resources>
