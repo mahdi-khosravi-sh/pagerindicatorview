@@ -131,7 +131,7 @@ class PagerIndicatorView : View {
 
             if (a.hasValue(R.styleable.PagerIndicatorView_progress)) {
                 val className = a.getString(R.styleable.PagerIndicatorView_progress)
-                progress = newInstance(className)
+                progress = newInstance<IndicatorProgress>(className)
             }
 
             val size = a.indexCount
