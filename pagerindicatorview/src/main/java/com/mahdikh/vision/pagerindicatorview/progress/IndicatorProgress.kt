@@ -19,7 +19,7 @@ abstract class IndicatorProgress {
     protected lateinit var currentInfo: IndicatorInfo
     protected lateinit var destinationInfo: IndicatorInfo
     private var oldDestinationPosition = 0
-    var interpolator: TimeInterpolator? = null
+    open var interpolator: TimeInterpolator? = null
     open var keepDraw = false
     var inProgress: Boolean = false
         protected set
@@ -97,7 +97,7 @@ abstract class IndicatorProgress {
         currentInfo = pagerIndicatorView.getIndicatorInfo(pagerIndicatorView.getCurrentItem())
         destinationInfo = currentInfo
 
-        if (keepDraw){
+        if (keepDraw) {
             pagerIndicatorView.getInfoList()[pagerIndicatorView.getCurrentItem()].draw = false
         }
     }
