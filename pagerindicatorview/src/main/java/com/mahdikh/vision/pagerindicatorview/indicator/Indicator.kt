@@ -8,7 +8,7 @@ import com.mahdikh.vision.pagerindicatorview.widget.PagerIndicatorView
 
 abstract class Indicator {
     internal open lateinit var pagerIndicatorView: PagerIndicatorView
-    protected val paint: Paint2 = Paint2()
+    val paint: Paint2 = Paint2()
 
     fun setColor(color: Int) {
         paint.color = color

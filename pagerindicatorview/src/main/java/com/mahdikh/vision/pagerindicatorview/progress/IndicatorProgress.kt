@@ -2,7 +2,6 @@ package com.mahdikh.vision.pagerindicatorview.progress
 
 import android.animation.TimeInterpolator
 import android.graphics.Canvas
-import android.graphics.Color
 import androidx.annotation.CallSuper
 import androidx.viewpager.widget.ViewPager
 import com.mahdikh.vision.pagerindicatorview.indicator.Indicator
@@ -11,9 +10,7 @@ import com.mahdikh.vision.pagerindicatorview.util.Paint2
 import com.mahdikh.vision.pagerindicatorview.widget.PagerIndicatorView
 
 abstract class IndicatorProgress {
-    private val paint: Paint2 = Paint2().also {
-        it.color = Color.parseColor("#ff5555")
-    }
+    val paint: Paint2 = Paint2()
     protected open lateinit var pagerIndicatorView: PagerIndicatorView
     protected lateinit var indicator: Indicator
     protected lateinit var currentInfo: IndicatorInfo
@@ -21,6 +18,7 @@ abstract class IndicatorProgress {
     private var oldDestinationPosition = 0
     open var interpolator: TimeInterpolator? = null
     open var keepDraw = false
+    var paintFromIndicator: Boolean = false
     var inProgress: Boolean = false
         protected set
     var offset: Float = 0.0F
@@ -31,6 +29,8 @@ abstract class IndicatorProgress {
     }
 
     open fun getColor(): Int {
+        if (paintFromIndicator)
+            return indicator.paint.color
         return paint.color
     }
 
@@ -46,7 +46,6 @@ abstract class IndicatorProgress {
                 currentPosition + 1
             }
         } else {
-
             currentPosition - 1
         }
 
@@ -104,7 +103,11 @@ abstract class IndicatorProgress {
 
     open fun draw(canvas: Canvas) {
         if (inProgress || keepDraw) {
-            onDraw(canvas, paint)
+            if (paintFromIndicator) {
+                onDraw(canvas, indicator.paint)
+            } else {
+                onDraw(canvas, paint)
+            }
         }
     }
 

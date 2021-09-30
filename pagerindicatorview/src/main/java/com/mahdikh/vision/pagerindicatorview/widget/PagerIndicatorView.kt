@@ -164,6 +164,9 @@ class PagerIndicatorView : View {
                             a.getResourceId(index, -1)
                         )
                     }
+                    R.styleable.PagerIndicatorView_progressPaintFromIndicator -> {
+                        progress?.paintFromIndicator = a.getBoolean(index, false)
+                    }
                 }
             }
             a.recycle()
