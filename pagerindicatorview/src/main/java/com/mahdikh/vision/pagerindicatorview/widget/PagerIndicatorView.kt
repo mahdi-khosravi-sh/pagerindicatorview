@@ -15,6 +15,7 @@ import com.mahdikh.vision.pagerindicatorview.indicator.CircleIndicator
 import com.mahdikh.vision.pagerindicatorview.indicator.Indicator
 import com.mahdikh.vision.pagerindicatorview.info.IndicatorInfo
 import com.mahdikh.vision.pagerindicatorview.progress.IndicatorProgress
+import com.mahdikh.vision.pagerindicatorview.util.Paint2
 
 class PagerIndicatorView : View {
     private val infoList: MutableList<IndicatorInfo> = mutableListOf()
@@ -155,8 +156,18 @@ class PagerIndicatorView : View {
                     R.styleable.PagerIndicatorView_indicatorStrokeWidth -> {
                         indicator.setStrokeWidth(a.getDimension(index, 0.0F))
                     }
+                    R.styleable.PagerIndicatorView_progressStrokeWidth -> {
+                        progress?.setStrokeWidth(a.getDimension(index, 0.0F))
+                    }
                     R.styleable.PagerIndicatorView_indicatorStyle -> {
-                        indicator.setStyle(a.getInt(index, 0))
+                        indicator.setStyle(
+                            Paint2.getStyle(a.getInt(index, 0))
+                        )
+                    }
+                    R.styleable.PagerIndicatorView_progressStyle -> {
+                        progress?.setStyle(
+                            Paint2.getStyle(a.getInt(index, 0))
+                        )
                     }
                     R.styleable.PagerIndicatorView_progress_interpolator -> {
                         progress?.interpolator = AnimationUtils.loadInterpolator(
@@ -166,6 +177,15 @@ class PagerIndicatorView : View {
                     }
                     R.styleable.PagerIndicatorView_progressPaintFromIndicator -> {
                         progress?.paintFromIndicator = a.getBoolean(index, false)
+                    }
+                    R.styleable.PagerIndicatorView_progressColor -> {
+                        progress?.setColor(a.getColor(index, Color.BLACK))
+                    }
+                    R.styleable.PagerIndicatorView_progressKeepDraw -> {
+                        progress?.keepDraw = a.getBoolean(index, false)
+                    }
+                    R.styleable.PagerIndicatorView_progressHideBottom -> {
+                        progress?.hideBottom = a.getBoolean(index, true)
                     }
                 }
             }

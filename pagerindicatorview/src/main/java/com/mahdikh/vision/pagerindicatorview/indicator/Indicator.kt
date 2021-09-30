@@ -22,10 +22,6 @@ abstract class Indicator {
         paint.style = style
     }
 
-    fun setStyle(style: Int) {
-        paint.setStyle(style)
-    }
-
     fun getStrokeWidth(): Float {
         return paint.strokeWidth
     }

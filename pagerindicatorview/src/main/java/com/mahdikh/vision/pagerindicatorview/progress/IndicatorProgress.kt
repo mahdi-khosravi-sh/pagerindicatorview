@@ -2,7 +2,9 @@ package com.mahdikh.vision.pagerindicatorview.progress
 
 import android.animation.TimeInterpolator
 import android.graphics.Canvas
+import android.graphics.Paint
 import androidx.annotation.CallSuper
+import androidx.annotation.ColorInt
 import androidx.viewpager.widget.ViewPager
 import com.mahdikh.vision.pagerindicatorview.indicator.Indicator
 import com.mahdikh.vision.pagerindicatorview.info.IndicatorInfo
@@ -18,21 +20,12 @@ abstract class IndicatorProgress {
     private var oldDestinationPosition = 0
     open var interpolator: TimeInterpolator? = null
     open var keepDraw = false
+    var hideBottom = true
     var paintFromIndicator: Boolean = false
     var inProgress: Boolean = false
         protected set
     var offset: Float = 0.0F
         private set
-
-    open fun setStrokeWidth(strokeWidth: Float) {
-        paint.strokeWidth = strokeWidth
-    }
-
-    open fun getColor(): Int {
-        if (paintFromIndicator)
-            return indicator.paint.color
-        return paint.color
-    }
 
     @CallSuper
     open fun onPageScrolled(position: Int, offset: Float, state: Int) {
@@ -77,10 +70,28 @@ abstract class IndicatorProgress {
             currentInfo = pagerIndicatorView.getIndicatorInfo(pagerIndicatorView.getCurrentItem())
             destinationInfo = currentInfo
 
-            if (keepDraw) {
+            if (keepDraw && hideBottom) {
                 currentInfo.draw = false
             }
         }
+    }
+
+    open fun setStrokeWidth(strokeWidth: Float) {
+        paint.strokeWidth = strokeWidth
+    }
+
+    open fun getColor(): Int {
+        if (paintFromIndicator)
+            return indicator.paint.color
+        return paint.color
+    }
+
+    open fun setColor(@ColorInt color: Int) {
+        paint.color = color
+    }
+
+    open fun setStyle(style: Paint.Style) {
+        paint.style = style
     }
 
     internal fun setIndicator(indicator: Indicator) {
@@ -96,7 +107,7 @@ abstract class IndicatorProgress {
         currentInfo = pagerIndicatorView.getIndicatorInfo(pagerIndicatorView.getCurrentItem())
         destinationInfo = currentInfo
 
-        if (keepDraw) {
+        if (keepDraw && hideBottom) {
             pagerIndicatorView.getInfoList()[pagerIndicatorView.getCurrentItem()].draw = false
         }
     }
@@ -104,7 +115,11 @@ abstract class IndicatorProgress {
     open fun draw(canvas: Canvas) {
         if (inProgress || keepDraw) {
             if (paintFromIndicator) {
-                onDraw(canvas, indicator.paint)
+                val p = indicator.paint
+                val color = p.color
+                p.color = pagerIndicatorView.selectedColor
+                onDraw(canvas, p)
+                p.color = color
             } else {
                 onDraw(canvas, paint)
             }

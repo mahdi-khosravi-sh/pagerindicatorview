@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="PagerIndicatorView">
         <attr name="indicatorStrokeWidth" format="dimension" />
+        <attr name="progressStrokeWidth" format="dimension" />
         <attr name="indicatorSize" format="dimension" />
         <attr name="indicatorSpace" format="dimension" />
         <attr name="color" format="color" />
@@ -11,9 +12,17 @@
             <enum name="STROKE" value="1" />
             <enum name="FILL_AND_STROKE" value="2" />
         </attr>
+        <attr name="progressStyle" format="enum">
+            <enum name="FILL" value="0" />
+            <enum name="STROKE" value="1" />
+            <enum name="FILL_AND_STROKE" value="2" />
+        </attr>
         <attr name="progressPaintFromIndicator" format="boolean" />
         <attr name="indicator" format="string" />
         <attr name="progress" format="string" />
+        <attr name="progressColor" format="color" />
+        <attr name="progressKeepDraw" format="boolean" />
+        <attr name="progressHideBottom" format="boolean" />
         <attr name="progress_interpolator" format="reference" />
     </declare-styleable>
 </resources>
