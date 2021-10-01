@@ -10,9 +10,10 @@ class ScaleProgress : IndicatorProgress() {
     private var paintColor: Int = Color.TRANSPARENT
     var scale: Float = .69F
     var selectedScale: Float = 1.0F
-    override var keepDraw: Boolean
-        get() = true
-        set(value) {}
+
+    init {
+        keepDraw = true
+    }
 
     override fun onReady() {
         super.onReady()
