@@ -8,7 +8,6 @@
     <string name="MoonIndicator">com.mahdikh.vision.pagerindicatorview.indicator.MoonIndicator</string>
     <string name="PlusSignIndicator">com.mahdikh.vision.pagerindicatorview.indicator.PlusSignIndicator</string>
     <string name="RhombusIndicator">com.mahdikh.vision.pagerindicatorview.indicator.RhombusIndicator</string>
-    <string name="RoundSquareIndicator">com.mahdikh.vision.pagerindicatorview.indicator.RoundSquareIndicator</string>
     <string name="SnowFlakeIndicator">com.mahdikh.vision.pagerindicatorview.indicator.SnowFlakeIndicator</string>
     <string name="SquareIndicator">com.mahdikh.vision.pagerindicatorview.indicator.SquareIndicator</string>
     <string name="SunIndicator">com.mahdikh.vision.pagerindicatorview.indicator.SunIndicator</string>

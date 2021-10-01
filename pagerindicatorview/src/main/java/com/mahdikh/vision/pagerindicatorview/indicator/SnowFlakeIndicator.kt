@@ -6,7 +6,7 @@ import com.mahdikh.vision.pagerindicatorview.util.Paint2
 
 class SnowFlakeIndicator : TransformIndicator() {
     var branchCounts: Int = 5
-    var factor: Float = 0.5F
+    var factor: Float = 0.3F
 
     private var cx: Float = 0.0F
     private var cy: Float = 0.0F

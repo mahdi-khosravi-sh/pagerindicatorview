@@ -8,7 +8,7 @@ import com.mahdikh.vision.pagerindicatorview.util.Paint2
 
 class ScaleProgress : IndicatorProgress() {
     private var paintColor: Int = Color.TRANSPARENT
-    var scale: Float = .6F
+    var scale: Float = .69F
     var selectedScale: Float = 1.0F
     override var keepDraw: Boolean
         get() = true

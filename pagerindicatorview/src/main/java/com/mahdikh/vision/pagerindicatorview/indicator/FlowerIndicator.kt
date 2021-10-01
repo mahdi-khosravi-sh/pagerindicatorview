@@ -6,9 +6,9 @@ import com.mahdikh.vision.pagerindicatorview.util.Paint2
 import kotlin.math.PI
 
 open class FlowerIndicator : PathIndicator() {
-    var petalsCount: Int = 3
-    var factor: Float = 0.8F
-    var circleRadiusFactor: Float = 1.2F
+    var petalsCount: Int = 5
+    var factor: Float = 0.55F
+    var circleRadiusFactor: Float = 0.8F
 
     private var cy: Float = 0.0F
     private var cx: Float = 0.0F
